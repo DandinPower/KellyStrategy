@@ -1,22 +1,23 @@
 import tkinter as tk
 from tkinter import ttk
-from Kali import *
+from kelly import *
 
 def callbackFunc():
     wallet = Wallet(int(walletString.get()))
     for i in range(int(timesString.get())):
         wallet.BetByKali(int(oddsString.get()), float(winrateString.get()))
+    resultString.set(f'{round(wallet.GetSize(),2)*100}%下注比例')
     wallet.ShowRecord()
-    print(wallet.record)
      
-app = tk.Tk() 
+app = tk.Tk()
+app.title('kelly') 
 app.geometry('200x150')
 
 labelWallet = tk.Label(app, text = "本金")
 labelWallet.grid(column=0, row=0, sticky=tk.W)
 labelOdds = tk.Label(app,text = "賠率(不含本金)")
 labelOdds.grid(column=0, row=1, sticky=tk.W)
-labelWinrate = tk.Label(app,text = "勝率")
+labelWinrate = tk.Label(app,text = "勝率(0~1)")
 labelWinrate.grid(column=0, row=2, sticky=tk.W)
 labelTimes = tk.Label(app,text = "次數")
 labelTimes.grid(column=0, row=3, sticky=tk.W)

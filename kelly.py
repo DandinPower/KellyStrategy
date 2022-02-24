@@ -20,17 +20,15 @@ class Wallet:
     def __init__(self, balance):
         self.balance = balance 
         self.record = [balance]
+        self.betSize = 0
+        self.size = 0
 
     def Bet(self,odds,winrate,size):
+        self.size = size
+        self.betSize = size * self.balance
+        self.balance -= self.betSize
         if(GetBetResult(winrate)):
-            #self.balance += self.balance*size*odds
-            betSize = size * self.balance
-            self.balance -= betSize
-            self.balance += ((odds + 1) * betSize)
-        else:
-            betSize = size * self.balance
-            #self.balance -= self.balance*size 
-            self.balance -= betSize
+            self.balance += ((odds + 1) * self.betSize)
         self.record.append(self.balance)
 
     def BetByKali(self, odds, winrate):
@@ -51,6 +49,12 @@ class Wallet:
         #print(x)
         plt.plot(x,self.record, c = "r")
         plt.show()
+    
+    def GetBetsize(self):
+        return self.betSize
+
+    def GetSize(self):
+        return self.size
 
 def main():
     #print(Kali(1,0.6))
